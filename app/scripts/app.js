@@ -14,10 +14,12 @@
             });
     }
     
-    
+    var firebaseRef = new Firebase("https://radiant-fire-6835.firebaseio.com/");
+    var roomsRef = firebaseRef.child("rooms");
     
     
     angular
-        .module('bloc-chat', ['firebase', 'ui.router'])
+        .module('bloc-chat', ['firebase', 'ui.router', 'ui.bootstrap'])
+        .value('roomsRef', roomsRef)
         .config(config);
 })();

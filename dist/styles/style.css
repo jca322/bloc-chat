@@ -6,6 +6,8 @@
     left: 0;
     bottom: 0;
     height: 100%;
+    width: auto;
+    z-index: -1;
 }
 
 .sidebar ul {
@@ -15,8 +17,36 @@
 
 .sidebar h1 {
     margin-left: 20px;
+    display: inline-block;
 }
 
 .section {
     float: right;
 }
+
+.btn.newRoom {
+    margin: 20px 10px 32px 20px;
+    padding: 6px 12px;
+}
+
+/*.modal-dialog {
+    background-color: lightgray;
+    z-index: 1;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    width: auto;
+}
+
+.modal-content {
+    padding: 10px;
+}
+
+.modal-content h3 {
+    text-align: left;
+}
+
+.modal-content h5 {
+    text-align: left;
+    margin: 0px;
+}*/
