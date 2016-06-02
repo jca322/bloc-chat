@@ -16,10 +16,12 @@
     
     var firebaseRef = new Firebase("https://radiant-fire-6835.firebaseio.com/");
     var roomsRef = firebaseRef.child("rooms");
+    var messageRef = firebaseRef.child("messages");
     
     
     angular
         .module('bloc-chat', ['firebase', 'ui.router', 'ui.bootstrap'])
         .value('roomsRef', roomsRef)
+        .value('messageRef', messageRef)
         .config(config);
 })();

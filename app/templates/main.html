@@ -1,11 +1,20 @@
 <div class="sidebar">
     <div>
         <h1>Bloc Chat</h1>
-        <button type="button" class="btn newRoom btn-default" ng-click="main.open()">New room</button>
+        <button type="button" class="btn newRoom btn-default" ng-click="main.openModal()">New room</button>
     </div>
     <ul>
-        <li ng-repeat="r in main.rooms">{{ r.name }}</li>
+        <li ng-repeat="r in main.rooms">
+            <a ng-click="main.select(r)" ng-class="{active: main.activeRoom === r}">{{ r.name }}</a>
+        </li>
     </ul>
 </div>
-<div class="section">
+<div class="container" ng-init="main.debug=false" ng-click="main.debug = !main.debug">
+    <h3>{{ main.activeRoom.name }}</h3>
+    <table class="msgContainer table table-striped">
+        <pre ng-if="main.debug">{{main.rooms | json }}</pre>
+        <tr class="row" ng-repeat="message in main.messages" ng-show="main.activeRoom.$id == message.roomId">
+            <td>{{ message.username + ": " + message.content }}</td>
+        </tr>
+    </table>
 </div>

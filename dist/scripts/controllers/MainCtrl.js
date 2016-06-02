@@ -1,31 +1,36 @@
 (function() {
-    function MainCtrl(roomService, $uibModal) {
+    function MainCtrl(roomService, $uibModal, messageService) {
+        this.$uibModal = $uibModal;
+         
         this.rooms = roomService.list();
+        this.activeRoom = null;
+        this.messages = messageService.list();
         
         /**
         *@desc indicates if modal is currently open
         *@type {boolean}
         */
-        var isOpen = false;
-                
-        this.open = function() {
-            if(isOpen === false) {
-               var modalInstance = $uibModal.open({
-                    templateUrl: '../../templates/modal.html',
-                    controller: 'ModalInstanceCtrl as modal',
-                    size: 'sm',
-                })
-               isOpen = true;
-               modalInstance.result.then(function(result) {
-                   isOpen = false;
-               });
-             } else {
-                console.log("isOpen equals " + isOpen);
-             };
-         }
+        this.isOpen = false;
     }
+                
+        MainCtrl.prototype.openModal = function() {
+            var modalInstance = this.$uibModal.open({
+                templateUrl: '../../templates/modal.html',
+                controller: 'ModalInstanceCtrl as modal',
+                size: 'sm'
+            });
+         }
+        
+        MainCtrl.prototype.openRoom = function(r) {
+            this.selected = r;
+        }
+        
+        MainCtrl.prototype.select = function(i) {
+            this.activeRoom = i;
+        };
+
     
     angular
         .module('bloc-chat')
-        .controller('MainCtrl', ['roomService', '$uibModal', MainCtrl])
+        .controller('MainCtrl', ['roomService', '$uibModal', 'messageService', MainCtrl])
 })();
