@@ -10,6 +10,7 @@
     </ul>
 </div>
 <div class="container" ng-init="main.debug=false" ng-click="main.debug = !main.debug">
+    <h5>Welcome {{ main.getUsername() }}!</h5>
     <h3>{{ main.activeRoom.name }}</h3>
     <table class="msgContainer table table-striped">
         <pre ng-if="main.debug">{{main.rooms | json }}</pre>
