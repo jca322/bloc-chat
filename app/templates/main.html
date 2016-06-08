@@ -1,21 +1,38 @@
-<div class="sidebar">
-    <div>
-        <h1>Bloc Chat</h1>
-        <button type="button" class="btn newRoom btn-default" ng-click="main.openModal()">New room</button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="sidebar col-md-3">
+            <div>
+                <h1>Bloc Chat</h1>
+                <button type="button" class="btn newRoom btn-default" ng-click="main.openModal()">New room</button>
+            </div>
+            <ul>
+                <li ng-repeat="r in main.rooms">
+                    <a ng-click="main.select(r)" ng-class="{active: main.activeRoom === r}">{{ r.name }}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9 col-md-offset-3">
+            <h5>Welcome {{ main.getUsername() }}!</h5>
+            <h3>{{ main.activeRoom.name }}</h3>
+            <tbody>
+                <table class="msgContainer table">
+                <tr class="row" ng-repeat="message in main.messages" ng-show="main.activeRoom.$id == message.roomId">
+                    <td>{{ message.username + ": " + message.content }}</td>
+                </tr>
+                </table>
+            </tbody>
+           <footer class="footer col-md-offset-1">
+                <div ng-show="main.activeRoom" class="col-md-6">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="textInput" placeholder="Write your message here" name="msgBox" ng-model="main.newMsgText">
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="main.send()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
-    <ul>
-        <li ng-repeat="r in main.rooms">
-            <a ng-click="main.select(r)" ng-class="{active: main.activeRoom === r}">{{ r.name }}</a>
-        </li>
-    </ul>
-</div>
-<div class="container" ng-init="main.debug=false" ng-click="main.debug = !main.debug">
-    <h5>Welcome {{ main.getUsername() }}!</h5>
-    <h3>{{ main.activeRoom.name }}</h3>
-    <table class="msgContainer table table-striped">
-        <pre ng-if="main.debug">{{main.rooms | json }}</pre>
-        <tr class="row" ng-repeat="message in main.messages" ng-show="main.activeRoom.$id == message.roomId">
-            <td>{{ message.username + ": " + message.content }}</td>
-        </tr>
-    </table>
 </div>

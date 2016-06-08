@@ -1,13 +1,19 @@
 (function() {
-    function MessageService($firebaseArray, roomsRef, messageRef) {
+    function MessageService($firebaseArray, roomsRef, messageRef, $cookies, roomService) {
         this.$firebaseArray = $firebaseArray;
         this.roomsRef = roomsRef;
         this.messageRef = messageRef;
+        this.$cookies = $cookies;
     }
-    
-    MessageService.prototype.add = function(username, content, sentAt, roomId) {
+      
+    MessageService.prototype.send = function(newMsgText, activeRoomId) {
         var messageRepo = this.$firebaseArray(this.messageRef);
-        return messageRepo.$add({ name: username, content: content, sentAt: sentAt, roomId: roomId });
+        messageRepo.$add({ 
+            username: this.$cookies.get('username'), //from $cookies
+            content: newMsgText, 
+            sentAt: Firebase.ServerValue.TIMESTAMP, //pull in date/timestamp
+            roomId: activeRoomId //pull in activeRoom Id
+        });
     };
     
     MessageService.prototype.list = function() {
@@ -22,5 +28,5 @@
     
     angular
         .module('bloc-chat')
-        .service('messageService', ['$firebaseArray', 'roomsRef', 'messageRef', MessageService]);
+        .service('messageService', ['$firebaseArray', 'roomsRef', 'messageRef', '$cookies', 'roomService', MessageService]);
 })();

@@ -2,6 +2,7 @@
     function MainCtrl(roomService, $uibModal, messageService, $cookies) {
         this.$uibModal = $uibModal;
         this.$cookies = $cookies;
+        this.messageService = messageService;
          
         this.rooms = roomService.list();
         this.activeRoom = null;
@@ -12,6 +13,8 @@
         *@type {boolean}
         */
         this.isOpen = false;
+        
+        this.newMsgText = "";
     }
                 
     MainCtrl.prototype.openModal = function() {
@@ -32,7 +35,12 @@
 
     MainCtrl.prototype.getUsername = function() {
         return this.$cookies.get('username');
-    }
+    };
+    
+    MainCtrl.prototype.send = function() {
+      this.messageService.send(this.newMsgText, this.activeRoom.$id); 
+      this.newMsgText = "";
+    };
 
     
     angular
